@@ -1,0 +1,28 @@
+{
+  "name": "ias-distancesensor",
+  "version": "0.0.1",
+  "description": "This sensor is a distance sensor and is deployed on the base of the submarine.",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iiithf/ias-distancesensor.git"
+  },
+  "keywords": [
+    "ias",
+    "distance",
+    "sensor"
+  ],
+  "author": "wolfram77@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iiithf/ias-distancesensor/issues"
+  },
+  "homepage": "https://github.com/iiithf/ias-distancesensor#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "ws": "^6.2.1"
+  }
+}
