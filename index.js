@@ -5,6 +5,7 @@ const path = require('path');
 
 
 
+const UNIT = 'ft';
 const DATARATE = 1000;
 const DEPTHMIN = 0;
 const DEPTHMAX = 1000;
@@ -65,12 +66,14 @@ app.use((req, res, next) => {
 });
 
 app.get('/status', (req, res) => {
-  res.json({time: new Date(dtime), distance: depth});
+  res.json({time: new Date(dtime), distance: depth, unit: UNIT});
 });
 app.post('/status', (req, res) => {
   var {distance} = req.body;
   mtime = new Date().getTime();
-  state.depth = distance;
+  state.depth = within(distance, DEPTHMIN, DEPTHMAX);
+  state.speed = 0;
+  res.json(null);
 });
 
 app.use(express.static(ASSETS, {extensions: ['html']}));

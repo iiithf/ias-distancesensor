@@ -1,6 +1,6 @@
 {
   "name": "ias-distancesensor",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "This sensor is a distance sensor and is deployed on the base of the submarine.",
   "main": "index.js",
   "scripts": {
