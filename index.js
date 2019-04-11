@@ -5,15 +5,15 @@ const path = require('path');
 
 
 
-const UNIT = 'ft';
-const DATARATE = 1000;
-const DEPTHMIN = 0;
-const DEPTHMAX = 1000;
-const DEPTHLOW = 200;
-const DEPTHLOWP = 0.1;
 const E = process.env;
 const PORT = parseInt(E['PORT']||'8000');
 const ASSETS = path.join(__dirname, 'assets');
+const UNIT = E['UNIT']||'ft';
+const DATARATE = parseInt(E['DATARATE']||'1000', 10);
+const DEPTHMIN = parseFloat(E['DEPTHMIN']||'0');
+const DEPTHMAX = parseFloat(E['DEPTHMAX']||'1000');
+const DEPTHLOW = parseFloat(E['DEPTHLOW']||'200');
+const DEPTHLOWP = parseFloat(E['DEPTHLOWP']||'0.1');
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({server});
