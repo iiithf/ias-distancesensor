@@ -42,7 +42,7 @@ const config = () => ({
   url: `http://${IP}:${PORT}/status_vec`,
   sensor_listen_ip: IP,
   sensor_listen_port: PORT,
-  out_url: `http://${IP}:${PORT}/status`,
+  in_url: `http://${IP}:${PORT}/status`,
 });
 
 function onStart() {
