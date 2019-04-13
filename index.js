@@ -41,7 +41,8 @@ const config = () => ({
   stream_port: PORT,
   url: `http://${IP}:${PORT}/status_vec`,
   sensor_listen_ip: IP,
-  sensor_listen_port: PORT
+  sensor_listen_port: PORT,
+  out_url: `http://${IP}:${PORT}/status`,
 });
 
 function onStart() {
@@ -102,7 +103,7 @@ app.post('/status', (req, res) => {
   mtime = new Date().getTime();
   state.depth = within(distance, DEPTHMIN, DEPTHMAX);
   state.speed = 0;
-  res.json(null);
+  res.json(true);
 });
 
 app.use(express.static(ASSETS, {extensions: ['html']}));
