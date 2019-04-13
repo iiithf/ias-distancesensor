@@ -1,5 +1,6 @@
 const express = require('express');
 const WebSocket = require('ws');
+const net = require('extra-net');
 const http = require('http');
 const path = require('path');
 
@@ -67,6 +68,12 @@ app.use((req, res, next) => {
 
 app.get('/status', (req, res) => {
   res.json({time: new Date(dtime), distance: depth, unit: UNIT});
+});
+app.get('/status_vec', (req, res) => {
+  var b = Buffer.alloc(8);
+  b.writeDoubleBE(depth);
+  res.writeHead(200, {'Content-Type': 'application/octet-stream'});
+  res.end(b);
 });
 app.post('/status', (req, res) => {
   var {distance} = req.body;
