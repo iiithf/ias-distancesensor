@@ -8,6 +8,7 @@ const path = require('path');
 
 const E = process.env;
 const PORT = parseInt(E['PORT']||'8000');
+const MASTER = E['MASTER']||'10.42.0.1:12346';
 const ASSETS = path.join(__dirname, 'assets');
 const UNIT = E['UNIT']||'ft';
 const DATARATE = parseInt(E['DATARATE']||'1000', 10);
@@ -29,6 +30,27 @@ function within(value, begin, end) {
 }
 
 
+const config = () => ({
+  agent: 'sensor',
+  action: 'register',
+  type: 'two_way',
+  sensor_id: 1,
+  stream_ip: sensor_ip,
+  stream_port: sensor_port,
+  url: sensor_url,
+  sensor_listen_ip: listen_ip,
+  sensor_listen_port: listen_port
+});
+
+function onStart() {
+  var [host, port] = MASTER.split(':');
+  var soc = net.createConnection(port, host, () => {
+    console.log('Connecting to '+MASTER);
+    soc.write(JSON.stringify(config()));
+    soc.destroy();
+  });
+}
+onStart();
 
 function depthSetup() {
   return {depth: DEPTHMAX, speed: 0, low: 0, total: 0};
