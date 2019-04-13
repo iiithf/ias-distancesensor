@@ -1,12 +1,14 @@
 const express = require('express');
 const WebSocket = require('ws');
 const net = require('extra-net');
+const pickle = require('pickle');
 const http = require('http');
 const path = require('path');
 
 
 
 const E = process.env;
+const IP = net.address().address;
 const PORT = parseInt(E['PORT']||'8000');
 const MASTER = E['MASTER']||'10.42.0.1:12346';
 const ASSETS = path.join(__dirname, 'assets');
@@ -35,11 +37,11 @@ const config = () => ({
   action: 'register',
   type: 'two_way',
   sensor_id: 1,
-  stream_ip: sensor_ip,
-  stream_port: sensor_port,
-  url: sensor_url,
-  sensor_listen_ip: listen_ip,
-  sensor_listen_port: listen_port
+  stream_ip: IP,
+  stream_port: PORT,
+  url: `http://${IP}:${PORT}/status_vec`,
+  sensor_listen_ip: IP,
+  sensor_listen_port: PORT
 });
 
 function onStart() {
@@ -92,10 +94,8 @@ app.get('/status', (req, res) => {
   res.json({time: new Date(dtime), distance: depth, unit: UNIT});
 });
 app.get('/status_vec', (req, res) => {
-  var b = Buffer.alloc(8);
-  b.writeDoubleBE(depth);
   res.writeHead(200, {'Content-Type': 'application/octet-stream'});
-  res.end(b);
+  pickle.dumps(depth, (data) => res.end(data));
 });
 app.post('/status', (req, res) => {
   var {distance} = req.body;
