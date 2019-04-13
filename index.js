@@ -103,7 +103,7 @@ app.post('/status', (req, res) => {
   mtime = new Date().getTime();
   state.depth = within(distance, DEPTHMIN, DEPTHMAX);
   state.speed = 0;
-  res.json(true);
+  res.json({agent: 'sensor', action: 'set_ack', status: 1, message: 'value successfully set to '+depth});
 });
 
 app.use(express.static(ASSETS, {extensions: ['html']}));
