@@ -40,8 +40,6 @@ const config = () => ({
   stream_ip: IP,
   stream_port: PORT,
   url: `http://${IP}:${PORT}/status_vec`,
-  sensor_listen_ip: IP,
-  sensor_listen_port: PORT,
   in_url: `http://${IP}:${PORT}/status`,
 });
 
@@ -101,7 +99,7 @@ app.get('/status_vec', (req, res) => {
 app.post('/status', (req, res) => {
   var {distance} = req.body;
   mtime = new Date().getTime();
-  state.depth = within(distance, DEPTHMIN, DEPTHMAX);
+  depth = state.depth = within(distance, DEPTHMIN, DEPTHMAX);
   state.speed = 0;
   res.json({agent: 'sensor', action: 'set_ack', status: 1, message: 'value successfully set to '+depth});
 });
